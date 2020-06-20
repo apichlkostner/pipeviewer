@@ -3,9 +3,10 @@ use std::io::Result;
 
 fn main() -> Result<()> {
     let args = Args::parse();
+    let mut reader = read::Reader::new(&args.infile)?;
     let mut total_bytes = 0;
     loop {
-        let buffer = match read::read(&args.infile) {
+        let buffer = match reader.read() {
             Ok(x) if x.is_empty() => break,
             Ok(x) => x,
             Err(_) => break,
